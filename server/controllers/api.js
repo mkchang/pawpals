@@ -368,4 +368,9 @@ var getUserType = (userID) => {
     });
 };
 
-
+module.exports.saveWalkGeolocation = (req, res) => {
+  var geolocation = req.body;
+  console.log('GEOLOCATION ', geolocation);
+  // models.
+  res.sendStatus(201);
+};

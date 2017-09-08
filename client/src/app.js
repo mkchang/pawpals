@@ -14,7 +14,8 @@ import Calendar from './components/Calendar';
 import Payment from './components/Payment.jsx';
 import ProfileOwner from './components/ProfileOwner';
 import ProfileWalker from './components/ProfileWalker';
-
+import FindMyDog from './components/FindMyDog';
+import TrackWalk from './components/TrackWalk';
 
 class App extends React.Component {
   render() {
@@ -29,7 +30,8 @@ class App extends React.Component {
               <li><Link to='/walker'>Walker</Link></li>
               <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
               <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
-
+              <li><Link to='/findmydog'>Find My Dog</Link></li>
+              <li><Link to='/trackwalk'>Track Walk</Link></li>
             </ul>
 
             <Route exact path="/home" render={() => (
@@ -40,7 +42,9 @@ class App extends React.Component {
             <Route exact path="/walker" component={Calendar}/>
             <Route exact path="/profilepage/owner" component={ProfileOwner}/>
             <Route exact path="/profilepage/walker" component={ProfileWalker}/>
-
+            <Route exact path="/findmydog" component={FindMyDog}/>
+            <Route exact path="/trackwalk" component={TrackWalk}/>
+            
           </div>
         </Router>
       </MuiThemeProvider>
