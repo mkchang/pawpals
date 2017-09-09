@@ -10,6 +10,9 @@ const Walk = db.Model.extend({
   },
   dog: function() {
     return this.belongsTo('Dog', 'dog_id');
+  },
+  geolocation: function() {
+    return this.hasMany('Geolocation', 'walk_id');
   }
 });
 

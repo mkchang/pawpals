@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     table.string('longitude', 20).notNullable();
     table.dateTime('timestamp').notNullable();
     table.integer('accuracy').notNullable();
+    table.integer('walk_id').notNullable();
     table.foreign('walk_id').references('walks.id').onDelete('CASCADE'); //foreign key
   });
 };
