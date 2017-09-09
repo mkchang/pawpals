@@ -370,7 +370,32 @@ var getUserType = (userID) => {
 
 module.exports.saveWalkGeolocation = (req, res) => {
   var geolocation = req.body;
-  console.log('GEOLOCATION ', geolocation);
-  // models.
-  res.sendStatus(201);
+  models.Geolocation.forge({
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    timestamp: new Date(req.body.timestamp),
+    accuracy: req.body.accuracy,
+    walk_id: req.body.walk_id
+  })
+    .save()
+    .then(geolocation => {
+      res.status(201).send(geolocation);
+    })
+    .catch(err => {
+      console.log('ERROR trying to save a walk geolocation: ', err);
+      res.status(500).send(err);
+    });
+};
+
+module.exports.fetchGeolocations = (req, res) => {
+  var walkId = Number(req.query.walkId);
+  models.Geolocation.where('walk_id', walkId)
+    .fetchAll()
+    .then(geolocations => {
+      res.status(200).send(geolocations);
+    })
+    .catch(err => {
+      console.log('ERROR trying to fetch all geolocations for walk_id:' + walkId + ' ', err);
+      res.status(500).send(err);
+    });
 };

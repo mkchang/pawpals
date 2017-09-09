@@ -9,7 +9,8 @@ class TrackWalk extends React.Component {
     super(props);
     this.state = {
       walk: {
-        walk_zone_pt: '944 Market St, San Francisco, CA 94103',
+        id: 201,
+        walk_zone_pt: '472 TEHAMA ST, San Francisco, CA 94103',
         walk_zone_radius: 3,
         price: 20,
         session_start: new Date(),
@@ -67,11 +68,12 @@ class TrackWalk extends React.Component {
     var geolocation = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
-      datetime: new Date(position.timestamp),
+      timestamp: new Date(position.timestamp),
       accuracy: position.coords.accuracy,
+      walk_id: this.state.walk.id
     };
     
-    console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, datetime:${new Date(position.timestamp)}`);
+    console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, timestamp:${new Date(position.timestamp)}`);
     this.postGeolocation(geolocation);
     this.setState({
       geolocations: this.state.geolocations.concat(geolocation)
@@ -114,7 +116,7 @@ class TrackWalk extends React.Component {
   postGeolocation(geolocation) {
     $.post('/api/walks/track', geolocation)
       .then((data) => {
-        console.log('SUCCESS sending geolocation');
+        console.log('SUCCESS sending geolocation ', data);
       })
       .fail((err) => {
         console.log('ERROR sending geolocation ', error);
@@ -124,9 +126,11 @@ class TrackWalk extends React.Component {
   render() {
     return (
       <div>
+        <h2>Dog:</h2>
         <div>
           <Avatar src={this.state.walk.dog.profile_pic} size={100} /> {this.state.walk.dog.name}
         </div>
+        <h2>Owner:</h2>
         <div>
           <Avatar src={this.state.walk.owner.profile_pic} size={70} /> {this.state.walk.owner.display}
         </div>
@@ -146,9 +150,9 @@ class TrackWalk extends React.Component {
           <List>
             {this.state.geolocations.map((geolocation) => (
               <ListItem 
-                key={geolocation.datetime}
+                key={geolocation.timestamp}
                 primaryText={`latitude:${geolocation.latitude}, longitutde:${geolocation.longitude}`} 
-                secondaryText={`accuracy:${geolocation.accuracy}, datetime:${geolocation.datetime}`} 
+                secondaryText={`accuracy:${geolocation.accuracy}, timestamp:${geolocation.timestamp}`} 
                 secondaryTextLines={2} 
               />
             ))}

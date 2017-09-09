@@ -64,6 +64,7 @@ router.route('/walks/refund')
   .post(ApiController.refundPayment);
 
 router.route('/walks/track')
+  .get(ApiController.fetchGeolocations)
   .post(ApiController.saveWalkGeolocation);
 
 module.exports = router;
